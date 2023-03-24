@@ -23,15 +23,16 @@ jobs:
       - name: Install dependencies
         env:
           CI: true
+          FUNCTION_NAME: backup
         run: |
-          cd functions/backup
+          cd functions/$FUNCTION_NAME
           yarn install
       - name: Build
         run: |
-          cd functions/backup
+          cd functions/$FUNCTION_NAME
           yarn build
       - name: Deploy
         run: |
-          cd functions/backup/bin
+          cd functions/$FUNCTION_NAME/bin
           zip -r function.zip ./*
           aws lambda update-function-code --function-name=chess-backup --zip-file=fileb://function.zip
