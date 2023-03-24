@@ -14,7 +14,6 @@ jobs:
         with:
           node-version: '14'
       - name: Test
-        run: echo $AWS_ACCESS_KEY_ID
         run: echo Hi $AWS_ACCESS_KEY_ID World
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
