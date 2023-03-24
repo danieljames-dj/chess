@@ -20,16 +20,18 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - name: yarn install
+      - name: Install dependencies
         env:
           CI: true
         run: |
-          cd lambdas/backup
+          cd functions/backup
           yarn install
-      - name: deploy
+      - name: Build
         run: |
-          cd lambdas/backup
+          cd functions/backup
           yarn build
-          cd bin
-          zip -r backup.zip ./*
-          aws lambda update-function-code --function-name=download --zip-file=fileb://backup.zip
+      - name: Deploy
+        run: |
+          cd functions/backup/bin
+          zip -r function.zip ./*
+          aws lambda update-function-code --function-name=chess-backup --zip-file=fileb://function.zip

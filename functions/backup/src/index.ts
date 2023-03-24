@@ -4,7 +4,7 @@
 exports.handler = async (event: any) => {
   const response = {
       statusCode: 200,
-      body: JSON.stringify('Updated Through Github Action 😁'),
+      body: JSON.stringify('Testing new function...'),
   };
   return response;
 };
