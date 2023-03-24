@@ -26,7 +26,9 @@ jobs:
         run: |
           cd lambdas/backup
           yarn install
-      # - name: deploy
-      #   run: |
-      #     zip -j deploy.zip ./*
-      #     aws lambda update-function-code --function-name=test --zip-file=fileb://deploy.zip
+      - name: deploy
+        run: |
+          pwd
+          cd ../backup
+          zip -j backup.zip ./*
+          aws lambda update-function-code --function-name=backup --zip-file=fileb://backup.zip
