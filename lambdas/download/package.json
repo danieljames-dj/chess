@@ -1,0 +1,21 @@
+{
+  "name": "download",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^18.11.18",
+    "aws-lambda": "^1.0.7",
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.109",
+    "ts-node": "^10.9.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./bin/index.js",
+    "dev": "ts-node ./src/index.ts",
+    "locally": "node -e \"console.log(require('./src/index.ts').handler(require('./events.json')));\""
+  }
+}

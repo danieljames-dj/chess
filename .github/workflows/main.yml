@@ -20,12 +20,13 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
-      - name: npm install
+      - name: yarn install
         env:
           CI: true
         run: |
-          npm ci
-      - name: deploy
-        run: |
-          zip -j deploy.zip ./*
-          aws lambda update-function-code --function-name=test --zip-file=fileb://deploy.zip
+          cd lambdas/backup
+          yarn install
+      # - name: deploy
+      #   run: |
+      #     zip -j deploy.zip ./*
+      #     aws lambda update-function-code --function-name=test --zip-file=fileb://deploy.zip
