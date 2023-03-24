@@ -1,5 +1,5 @@
 function main() {
-  console.log('Hello World');
+  console.log('Hello Hi');
 }
 
 exports.handler = async () => {
