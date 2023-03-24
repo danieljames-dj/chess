@@ -1,5 +1,5 @@
 export interface FileListType {
   [key: string]: {
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
 }

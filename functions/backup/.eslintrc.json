@@ -7,7 +7,6 @@
     "airbnb",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "plugin:react/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -19,8 +18,6 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react",
-    "react-hooks",
     "@typescript-eslint",
     "simple-import-sort",
     "unused-imports",
@@ -33,6 +30,7 @@
     "@typescript-eslint/interface-name-prefix": 0,
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-var-requires": 0,
     "@typescript-eslint/typedef": [
@@ -115,25 +113,6 @@
       }
     ],
     "quotes": [2, "single"],
-    "react-hooks/rules-of-hooks": "error",
-    "react/destructuring-assignment": 0,
-    "react/forbid-prop-types": 0,
-    "react/jsx-closing-tag-location": 0,
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [".tsx"]
-      }
-    ],
-    "react/jsx-first-prop-new-line": [2, "multiline"],
-    "react/jsx-no-target-blank": 0,
-    "react/jsx-props-no-spreading": "off",
-    "react/jsx-uses-vars": 2,
-    "react/prop-types": "off",
-    "react/require-default-props": "off",
-    "react/require-extension": 0,
-    "react/self-closing-comp": 0,
-    "react/sort-comp": 0,
     "require-yield": 0,
     "semi": [2, "always"],
     "simple-import-sort/imports": [

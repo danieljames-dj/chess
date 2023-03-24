@@ -11,5 +11,5 @@
     "allowSyntheticDefaultImports": true
   },
   "compileOnSave": true,
-  "include": ["src"]
+  "include": ["src", "../../functions_deprecated/src/types/FileListType.ts"]
 }
