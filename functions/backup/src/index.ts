@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { mkdirSync, rmSync } from 'fs';
 
-import AdmZip = require('adm-zip');
+// import AdmZip = require('adm-zip');
 import { downloadFile } from './controllers/downloadFile';
 import { getChessFilesList } from './controllers/getChessFilesList';
 import { sendMessageToTelegram } from './controllers/sendTelegramMessage';
@@ -25,9 +25,9 @@ async function downloadBackup(directory: string) {
 
 async function compressBackup(directory: string) {
   // eslint-disable-next-line @typescript-eslint/typedef
-  const zip = new AdmZip();
-  zip.addLocalFolder(`${directory}/backup`);
-  zip.writeZip(`${directory}/backup.zip`);
+  // const zip = new AdmZip();
+  // zip.addLocalFolder(`${directory}/backup`);
+  // zip.writeZip(`${directory}/backup.zip`);
 }
 
 async function uploadBackup(directory: string) {
