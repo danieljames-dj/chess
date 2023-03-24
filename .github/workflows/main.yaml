@@ -30,6 +30,6 @@ jobs:
         run: |
           cd lambdas/backup
           yarn build
-          cd lib
+          cd bin
           zip -r backup.zip ./*
           aws lambda update-function-code --function-name=download --zip-file=fileb://backup.zip
