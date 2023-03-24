@@ -31,4 +31,4 @@ jobs:
           cd lambdas/backup
           pwd
           zip -j backup.zip ./*
-          aws lambda update-function-code --function-name=backup --zip-file=fileb://backup.zip
+          aws lambda update-function-code --function-name=download --zip-file=fileb://backup.zip
