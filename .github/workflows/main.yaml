@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  FUNCTION_NAME: backup
+
 jobs:
   deploy_functions:
     environment: prod
@@ -21,9 +24,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Install dependencies
-        env:
-          CI: true
-          FUNCTION_NAME: backup
         run: |
           cd functions/$FUNCTION_NAME
           yarn install
