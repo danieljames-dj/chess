@@ -67,7 +67,7 @@ async function main(tempDirectory: string, env: { [key: string]: string }) {
 
 exports.handler = async () => {
   const tempDirectory: string = '/tmp';
-  main(
+  await main(
     tempDirectory,
     Object.entries(process.env).reduce(
       // eslint-disable-next-line @typescript-eslint/typedef
