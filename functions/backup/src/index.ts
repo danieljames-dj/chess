@@ -57,7 +57,7 @@ async function triggerOpeningTreeBuild(env: { [key: string]: string }) {
 async function sendMessage(message: string, env: { [key: string]: string }) {
   const chatId: string = env.TELEGRAM_BOT_CHAT_ID || '';
   const botToken: string = env.TELEGRAM_BOT_TOKEN || '';
-  sendMessageToTelegram(message, chatId, botToken);
+  await sendMessageToTelegram(message, chatId, botToken);
 }
 
 async function main(tempDirectory: string, env: { [key: string]: string }) {
@@ -65,7 +65,7 @@ async function main(tempDirectory: string, env: { [key: string]: string }) {
   await compressBackup(tempDirectory);
   await uploadBackup(tempDirectory, env);
   await triggerOpeningTreeBuild(env);
-  sendMessage('I am Alive...', env);
+  await sendMessage('I am Alive...', env);
 }
 
 exports.handler = async () => {
