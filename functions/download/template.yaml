@@ -1,7 +1,0 @@
-Resources:
-  BulkImageLambdaFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ./dist
-      Handler: index.handler
-      Runtime: nodejs14.x

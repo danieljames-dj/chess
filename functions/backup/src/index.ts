@@ -1,11 +1,15 @@
 /* eslint-disable no-restricted-syntax */
 import { mkdirSync, rmSync } from 'fs';
 
-// import AdmZip = require('adm-zip');
+import AdmZip = require('adm-zip');
+import axios from 'axios';
+
 import { downloadFile } from './controllers/downloadFile';
 import { getChessFilesList } from './controllers/getChessFilesList';
+import { getHanoiIndex } from './controllers/getHanoiIndex';
 import { sendMessageToTelegram } from './controllers/sendTelegramMessage';
 import { uploadFile } from './controllers/uploadFile';
+import { uploadToCloud } from './controllers/uploadToCloud';
 import { FileListType } from './types/FileListType';
 
 async function downloadBackup(directory: string) {
@@ -25,50 +29,53 @@ async function downloadBackup(directory: string) {
 
 async function compressBackup(directory: string) {
   // eslint-disable-next-line @typescript-eslint/typedef
-  // const zip = new AdmZip();
-  // zip.addLocalFolder(`${directory}/backup`);
-  // zip.writeZip(`${directory}/backup.zip`);
+  const zip = new AdmZip();
+  zip.addLocalFolder(`${directory}/backup`);
+  zip.writeZip(`${directory}/backup.zip`);
 }
 
-async function uploadBackup(directory: string) {
-  // const hanoiIndex: number = getHanoiIndex(5);
-  // const storage = new Storage();
-  // await storage
-  //   .bucket('gs://lichess-backup.appspot.com/')
-  //   .upload(`${directory}/backup.zip`, {
-  //     destination: `backup-${hanoiIndex}.zip`,
-  //   });
-  // await storage
-  //   .bucket('gs://lichess-backup.appspot.com/')
-  //   .upload(`${directory}/backup.zip`, {
-  //     destination: 'backup.zip',
-  //   });
+async function uploadBackup(directory: string, env: { [key: string]: string }) {
+  const hanoiIndex: number = getHanoiIndex(5);
+  uploadToCloud(
+    `${directory}/backup.zip`,
+    `lichess-backup-${hanoiIndex}.zip`,
+    env,
+  );
+  uploadToCloud(`${directory}/backup.zip`, 'lichess-backup.zip', env);
   rmSync(`${directory}/backup`, { recursive: true, force: true });
   rmSync(`${directory}/backup.zip`);
 }
 
-async function triggerOpeningTreeBuild() {
-  // const openingTreeDeployHook = process.env.VERCEL_DEPLOY_HOOK;
-  // await axios.post(openingTreeDeployHook);
+async function triggerOpeningTreeBuild(env: { [key: string]: string }) {
+  const openingTreeDeployHook: string = env.VERCEL_DEPLOY_HOOK;
+  await axios.post(openingTreeDeployHook);
 }
 
-async function sendMessage(message: string) {
-  const chatId: string = 'process.env.TELEGRAM_BOT_CHAT_ID';
-  const botToken: string = 'process.env.TELEGRAM_BOT_TOKEN';
+async function sendMessage(message: string, env: { [key: string]: string }) {
+  const chatId: string = env.TELEGRAM_BOT_CHAT_ID || '';
+  const botToken: string = env.TELEGRAM_BOT_TOKEN || '';
   sendMessageToTelegram(message, chatId, botToken);
 }
 
-async function main(tempDirectory: string) {
-  console.log(process.env.TELEGRAM_BOT_TOKEN);
-  return;
+async function main(tempDirectory: string, env: { [key: string]: string }) {
   await downloadBackup(tempDirectory);
   await compressBackup(tempDirectory);
-  await uploadBackup(tempDirectory);
-  await triggerOpeningTreeBuild();
-  sendMessage('I am Alive...');
+  await uploadBackup(tempDirectory, env);
+  await triggerOpeningTreeBuild(env);
+  sendMessage('I am Alive...', env);
 }
 
 exports.handler = async () => {
   const tempDirectory: string = '/tmp';
-  main(tempDirectory);
+  main(
+    tempDirectory,
+    Object.entries(process.env).reduce(
+      // eslint-disable-next-line @typescript-eslint/typedef
+      (acc: { [key: string]: string }, [key, value]) => {
+        acc[key] = value || '';
+        return acc;
+      },
+      {},
+    ),
+  );
 };
