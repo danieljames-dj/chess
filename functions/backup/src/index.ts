@@ -12,10 +12,13 @@ import { uploadFile } from './controllers/uploadFile';
 import { uploadToCloud } from './controllers/uploadToCloud';
 import { FileListType } from './types/FileListType';
 
-async function downloadBackup(directory: string) {
+async function downloadBackup(
+  directory: string,
+  env: { [key: string]: string },
+) {
   rmSync(`${directory}/backup`, { recursive: true, force: true });
   mkdirSync(`${directory}/backup`);
-  const fileList: FileListType = await getChessFilesList();
+  const fileList: FileListType = await getChessFilesList(env);
   for (const type of Object.keys(fileList)) {
     mkdirSync(`${directory}/backup/${type}`);
     for (const fileName of Object.keys(fileList[type])) {
@@ -58,7 +61,7 @@ async function sendMessage(message: string, env: { [key: string]: string }) {
 }
 
 async function main(tempDirectory: string, env: { [key: string]: string }) {
-  await downloadBackup(tempDirectory);
+  await downloadBackup(tempDirectory, env);
   await compressBackup(tempDirectory);
   await uploadBackup(tempDirectory, env);
   await triggerOpeningTreeBuild(env);

@@ -34,7 +34,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "postbuild": "cp package.json bin/package.json && cd bin && npm install",
+    "postbuild": "cp package.json bin/package.json && cp src/data/tempData.json bin/tempData.json && cd bin && npm install",
     "start": "node ./bin/index.js",
     "dev": "ts-node -e \"require('dotenv').config();require('./src/index.ts').handler();\""
   }

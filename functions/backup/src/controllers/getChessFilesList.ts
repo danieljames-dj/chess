@@ -3,10 +3,12 @@ import { readFile } from 'fs';
 import { logger } from '../config/logger';
 import { FileListType } from '../types/FileListType';
 
-export async function getChessFilesList(): Promise<FileListType> {
+export async function getChessFilesList(env: {
+  [key: string]: string;
+}): Promise<FileListType> {
   logger('controllers/getChessFilesList');
   // TODO: Change to fetch from Google Sheet
-  const fileListPath: string = 'src/data/tempData.json';
+  const fileListPath: string = env.CHESS_LIST_PATH;
   // eslint-disable-next-line @typescript-eslint/typedef
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line @typescript-eslint/typedef
