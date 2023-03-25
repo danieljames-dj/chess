@@ -6,15 +6,10 @@ export async function uploadToCloud(
   fileName: string,
   env: { [key: string]: string },
 ) {
-  let s3: AWS.S3;
-  if (env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY) {
-    s3 = new AWS.S3({
-      accessKeyId: env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
-    });
-  } else {
-    s3 = new AWS.S3();
-  }
+  const s3: AWS.S3 = new AWS.S3({
+    accessKeyId: env.CLOUD_ACCESS_KEY_ID,
+    secretAccessKey: env.CLOUD_SECRET_ACCESS_KEY,
+  });
   await s3
     .putObject({
       Bucket: env.AWS_S3_BUCKET_NAME,
