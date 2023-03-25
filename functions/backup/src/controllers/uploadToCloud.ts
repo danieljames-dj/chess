@@ -6,11 +6,15 @@ export async function uploadToCloud(
   fileName: string,
   env: { [key: string]: string },
 ) {
-  // eslint-disable-next-line @typescript-eslint/typedef
-  const s3 = new AWS.S3({
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
-  });
+  let s3: AWS.S3;
+  if (env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY) {
+    s3 = new AWS.S3({
+      accessKeyId: env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+    });
+  } else {
+    s3 = new AWS.S3();
+  }
   await s3
     .putObject({
       Bucket: env.AWS_S3_BUCKET_NAME,
