@@ -1,3 +1,4 @@
+// TODO: Have proper typing for env
 /* eslint-disable no-restricted-syntax */
 import { mkdirSync, rmSync } from 'fs';
 
