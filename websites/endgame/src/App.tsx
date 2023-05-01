@@ -59,9 +59,6 @@ function App() {
               fen: fen,
               solution: solution
             }));
-            // https://hymj3gzswtkqrn6fhtl5zjouku0uoumy.lambda-url.us-east-1.on.aws/?index=1&object="{\"fen\":\"8/8/b2K4/kp2N3/p7/P1P5/8/8 w - - 0 1\",\"solution\":\"Testing\"}"
-            // https://hymj3gzswtkqrn6fhtl5zjouku0uoumy.lambda-url.us-east-1.on.aws/?index=1&object=%7B%22fen%22%3A%228%2F8%2Fb2K4%2Fkp2N3%2Fp7%2FP1P5%2F8%2F8+w+-+-+0+1%22%2C%22solution%22%3A%22%22%7D
-            // https://hymj3gzswtkqrn6fhtl5zjouku0uoumy.lambda-url.us-east-1.on.aws/?index=1&object=%7B%5C%22fen%5C%22%3A%5C%228%2F8%2Fb2K4%2Fkp2N3%2Fp7%2FP1P5%2F8%2F8+w+-+-+0+1%5C%22%2C%5C%22solution%5C%22%3A%5C%22test%5C%22%7D
             console.log(url.href);
             console.log(url.searchParams);
           }}>Submit</button>

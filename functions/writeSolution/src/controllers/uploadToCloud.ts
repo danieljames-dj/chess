@@ -10,6 +10,7 @@ export async function uploadToCloud(
     accessKeyId: env.CLOUD_ACCESS_KEY_ID,
     secretAccessKey: env.CLOUD_SECRET_ACCESS_KEY,
   });
+  console.log('DJDJ obect', object);
   if (index && object) {
     await s3
       .putObject({
