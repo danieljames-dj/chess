@@ -2,7 +2,8 @@ import AWS from 'aws-sdk';
 
 export async function uploadToCloud(
   index: number,
-  object: { [key: string]: string },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  object: any,
   env: { [key: string]: string },
 ) {
   const s3: AWS.S3 = new AWS.S3({
