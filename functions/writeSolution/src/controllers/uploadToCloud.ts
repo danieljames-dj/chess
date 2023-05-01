@@ -10,14 +10,12 @@ export async function uploadToCloud(
     accessKeyId: env.CLOUD_ACCESS_KEY_ID,
     secretAccessKey: env.CLOUD_SECRET_ACCESS_KEY,
   });
-  console.log('DJDJ', index);
-  console.log('DJDJ', object);
   if (index && object) {
     await s3
       .putObject({
         Bucket: env.AWS_S3_BUCKET_NAME,
         Key: `endgame_${index}`,
-        Body: JSON.stringify(object),
+        Body: object,
         ContentType: 'application/json',
       })
       .promise();
