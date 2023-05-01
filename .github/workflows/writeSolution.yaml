@@ -36,4 +36,4 @@ jobs:
         run: |
           cd functions/$FUNCTION_NAME/bin
           zip -r function.zip ./*
-          aws lambda update-function-code --function-name=chess-backup --zip-file=fileb://function.zip
+          aws lambda update-function-code --function-name=chess-write-solution --zip-file=fileb://function.zip
