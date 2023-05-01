@@ -1,0 +1,39 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  FUNCTION_NAME: writeSolution
+
+jobs:
+  deploy_functions:
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Install dependencies
+        run: |
+          cd functions/$FUNCTION_NAME
+          yarn install
+      - name: Build
+        run: |
+          cd functions/$FUNCTION_NAME
+          yarn build
+          yarn postbuild
+      - name: Deploy
+        run: |
+          cd functions/$FUNCTION_NAME/bin
+          zip -r function.zip ./*
+          aws lambda update-function-code --function-name=chess-backup --zip-file=fileb://function.zip
