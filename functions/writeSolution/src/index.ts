@@ -11,5 +11,9 @@ exports.handler = async (event: any) => {
     },
     {},
   );
-  await uploadToCloud(parseInt(index, 10), JSON.parse(object), env);
+  await uploadToCloud(
+    parseInt(index, 10),
+    JSON.parse(decodeURIComponent(object)),
+    env,
+  );
 };
