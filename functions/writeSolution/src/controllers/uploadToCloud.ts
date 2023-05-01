@@ -12,12 +12,14 @@ export async function uploadToCloud(
   });
   console.log('DJDJ', index);
   console.log('DJDJ', object);
-  await s3
-    .putObject({
-      Bucket: env.AWS_S3_BUCKET_NAME,
-      Key: `endgame_${index}`,
-      Body: JSON.stringify(object),
-      ContentType: 'application/json',
-    })
-    .promise();
+  if (index && object) {
+    await s3
+      .putObject({
+        Bucket: env.AWS_S3_BUCKET_NAME,
+        Key: `endgame_${index}`,
+        Body: JSON.stringify(object),
+        ContentType: 'application/json',
+      })
+      .promise();
+  }
 }
