@@ -1,8 +1,7 @@
-import { APIGatewayProxyEvent } from 'aws-lambda';
-
 import { uploadToCloud } from './controllers/uploadToCloud';
 
-exports.handler = async (event: APIGatewayProxyEvent) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+exports.handler = async (event: any) => {
   const { obj, index } = event;
   const env: { [key: string]: string } = Object.entries(process.env).reduce(
     // eslint-disable-next-line @typescript-eslint/typedef
