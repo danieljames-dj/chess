@@ -2,8 +2,7 @@ import { uploadToCloud } from './controllers/uploadToCloud';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 exports.handler = async (event: any) => {
-  const { obj, index } = event;
-  console.log('DJDJ', event.queryStringParameters);
+  const { index, object } = event.queryStringParameters;
   const env: { [key: string]: string } = Object.entries(process.env).reduce(
     // eslint-disable-next-line @typescript-eslint/typedef
     (acc: { [key: string]: string }, [key, value]) => {
@@ -12,5 +11,5 @@ exports.handler = async (event: any) => {
     },
     {},
   );
-  await uploadToCloud(index, obj, env);
+  await uploadToCloud(parseInt(index, 10), JSON.parse(object), env);
 };
