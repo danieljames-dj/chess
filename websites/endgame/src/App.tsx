@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import { Chessboard } from "react-chessboard";
@@ -13,7 +12,7 @@ function App() {
 
   React.useEffect(() => {
     setSolutionMode(false);
-    axios.get(`https://danieljamesin-backup-public.s3.amazonaws.com/endgame_${positionNumber}`).then(response => {
+    axios.get(`${process.env.REACT_APP_S3_URL}/endgame_${positionNumber}`).then(response => {
       setFen(response.data.fen);
       if (response.data.solution) {
         setSoln(response.data.solution);
@@ -28,6 +27,31 @@ function App() {
         position={fen}
         boardWidth={300}
       />
+      {solutionMode === true ?
+        <div>
+          <textarea id="solution"></textarea>
+          <button onClick={async () => {
+            const solution = (document.getElementById('solution') as HTMLInputElement)?.value;
+            const url = new URL(process.env.REACT_APP_FUNCTION_URL || '');
+            console.log(JSON.stringify({
+              fen: fen,
+              solution: solution
+            }));
+            url.searchParams.append('index', positionNumber.toString());
+            url.searchParams.append('object', JSON.stringify({
+              fen: fen,
+              solution: solution
+            }));
+            await axios.get(url.href);
+          }}>Submit</button>
+        </div>
+       : null}
+       {soln != null ?
+       <div>
+        <h3>Solution</h3>
+        <div>{soln}</div>
+       </div>
+        : null}
       <div style={{
         display: 'flex',
       }}>
@@ -44,32 +68,6 @@ function App() {
           }
         }}>Overwrite solution</button> : null}
       </div>
-      {solutionMode === false ?
-        <div>
-          <textarea id="solution"></textarea>
-          <button onClick={() => {
-            const solution = (document.getElementById('solution') as HTMLInputElement)?.value;
-            const url = new URL(process.env.REACT_APP_FUNCTION_URL || '');
-            console.log(JSON.stringify({
-              fen: fen,
-              solution: solution
-            }));
-            url.searchParams.append('index', positionNumber.toString());
-            url.searchParams.append('object', JSON.stringify({
-              fen: fen,
-              solution: solution
-            }));
-            console.log(url.href);
-            console.log(url.searchParams);
-          }}>Submit</button>
-        </div>
-       : null}
-       {soln != null ?
-       <div>
-        <h3>Solution</h3>
-        <div>{soln}</div>
-       </div>
-        : null}
     </div>
   );
 }
