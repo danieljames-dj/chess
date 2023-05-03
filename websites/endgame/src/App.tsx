@@ -47,7 +47,10 @@ function App() {
         </div>
        : null}
        {soln != null ?
-       <div>
+       <div style={{
+        whiteSpace: 'pre-wrap',
+        paddingBottom: '20px',
+       }}>
         <h3>Solution</h3>
         <div>{soln}</div>
        </div>
